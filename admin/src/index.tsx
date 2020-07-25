@@ -12,7 +12,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <BrowserRouter basename="/wordpress/index.php/admin">
+        <BrowserRouter basename="/wordpress-dev/wp-admin/admin.php">
           <App />
         </BrowserRouter>
       </PersistGate>

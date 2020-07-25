@@ -75,17 +75,9 @@ add_action( 'admin_enqueue_scripts', 'alexandria_admin_enqueue_assets' );
 add_action('admin_menu', 'alexandria_admin_setup');
 
 function alexandria_admin_setup(){
-    add_menu_page( 'Alexandria Page', 'Alexandria', 'manage_options', 'test-plugin', 'alexandria_admin_init' );
+    add_menu_page( 'Alexandria Page', 'Alexandria', 'manage_options', 'alexandria-plugin', 'alexandria_admin_init' );
 }
 
 function alexandria_admin_init(){
-	$settings = array(
-		'l18n'       => array(
-			'main_title' => 'Hi this is your React app running in WordPress',
-		),
-		'some_items' => array( 'lorem ipsum', 'dolor sit amet' ),
-	);
-
-	echo '<div id="alexandria-admin" data-default-settings="' . esc_attr( wp_json_encode( $settings ) ) . '"></div>';
-    // echo "<div id='alexandria-admin'></div>";
+	echo '<div id="alexandria-admin"></div>';
 }
