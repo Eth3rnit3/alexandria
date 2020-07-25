@@ -1,0 +1,22 @@
+{
+  "default_locale": "fr",
+  "description": "...",
+
+  "icons": {
+    "48": "icon.png",
+    "96": "icon@2x.png"
+  },
+
+  "manifest_version": 1,
+
+  "name": "Alexandria",
+
+  "permissions": ["webNavigation"],
+
+  "version": "1.0",
+
+  "user_scripts": {
+    "api_script": "apiscript.js"
+  },
+  "web_accessible_resources": ["images/my-image.png"]
+}
