@@ -4,4 +4,5 @@ export default {
   authors: `${baseURL}/authors`,
   nationalities: `${baseURL}/nationalities`,
   surnames: `${baseURL}/surnames`,
+  secret_orders: `${baseURL}/secret_orders`,
 }

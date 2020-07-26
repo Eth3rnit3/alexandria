@@ -16,7 +16,7 @@ export interface IAuthor extends IModel {
   firstname:  string;
   is_master:  boolean;
   lastname:   string;
-  user_id:    bigint | null;
+  user_id:    bigint;
   image_urls: string[];
   pending_images: string[];
   display_name: string;

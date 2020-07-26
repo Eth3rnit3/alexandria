@@ -1,10 +1,12 @@
 import React, { ReactElement } from 'react';
-import Select from 'react-select';
+import SelectCreatable from 'react-select/creatable';
 import randomstring from 'randomstring';
 import * as SelectExp from 'react-select';
 import { FormGroup, Label, FormFeedback } from 'reactstrap';
 import { UseFormMethods } from 'react-hook-form';
+import { createSurname, deleteSurname } from '../api/surnnames';
 import { IAuthor } from '../interfaces/author';
+import { AxiosResponse } from 'axios';
 
 
 interface Props extends SelectExp.Props {
@@ -18,7 +20,7 @@ interface Props extends SelectExp.Props {
   refresh?: any;
 }
 
-export default function HasManyPicker({
+export default function HasManyPickerCreatable({
   label,
   id = randomstring.generate(7),
   formMethods,
@@ -28,23 +30,35 @@ export default function HasManyPicker({
   refresh,
   ...rest
 }: Props): ReactElement {
-  const { register, errors, setValue, getValues } = formMethods;
+  const { register, errors } = formMethods;
   return (
     <FormGroup>
       {
         label &&
         <Label htmlFor={id}>{label}</Label>
       }
-      <Select
+      <SelectCreatable
         {...rest}
         placeholder="Selectionner"
-        isMulti 
+        isMulti
         id={id}
         onChange={(values, { action, removedValue }) => {
           const vals = values || [];
-          if(toResource === 'secret_order'){
-            //@ts-ignore
-            setValue('secret_order_ids', JSON.stringify(vals.map(val => val.value)))
+          //@ts-ignore
+          const lastItem = vals[vals.length - 1]
+          if(action === 'create-option' && lastItem.__isNew__){
+            if(toResource === 'surname'){
+              createSurname(lastItem.label, 'Author', fromResource.id)
+              .then((response: any) =>  refresh && refresh(response))
+              .catch((error: any) => { console.log(error); })
+            }
+          }
+          if(action === 'remove-value'){
+            if(toResource === 'surname' && removedValue){
+              deleteSurname(parseInt(removedValue.value))
+              .then((response: any) =>  refresh && refresh(response))
+              .catch((error: any) => { console.log(error); })
+            }
           }
         }}
       />
