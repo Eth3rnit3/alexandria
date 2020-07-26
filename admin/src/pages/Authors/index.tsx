@@ -28,9 +28,9 @@ export default function Authors({}: Props): ReactElement {
         </thead>
         <tbody>
           {
-            _authors.map(author => {
+            _authors.map((author, idx) => {
               return (
-                <tr key={author.id}>
+                <tr key={author.id || idx}>
                   <th scope="row">{author.id}</th>
                   <td>{author.lastname}</td>
                   <td>{author.firstname}</td>

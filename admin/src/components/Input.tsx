@@ -10,6 +10,7 @@ interface Props extends InputProps {
   label?: string;
   validations?: ValidationRules;
   clearable?: boolean;
+  options?: any[];
 }
 
 export default function InputForm({
@@ -19,10 +20,12 @@ export default function InputForm({
   label,
   validations = {},
   clearable,
+  options,
   ...rest
 }: Props): ReactElement {
   const { register, errors } = formMethods;
   const innerRef = register(validations);
+  const isSelect = rest.type && rest.type === 'select';
   return (
     <FormGroup>
       {
@@ -42,13 +45,32 @@ export default function InputForm({
             </Button>
           </InputGroupAddon>
         }
-        <Input
-          {...rest}
-          id={id}
-          invalid={errors.hasOwnProperty(name)}
-          name={name}
-          innerRef={innerRef}
-        />
+        {
+          isSelect
+          ? (
+            // select input
+            <Input
+              {...rest}
+              id={id}
+              invalid={errors.hasOwnProperty(name)}
+              name={name}
+              innerRef={innerRef}
+            >
+              {
+                options?.map(option => <option key={option.id} value={option.id}>{option.name}</option>)
+              }
+            </Input>
+          ) : (
+            // other inputs
+            <Input
+              {...rest}
+              id={id}
+              invalid={errors.hasOwnProperty(name)}
+              name={name}
+              innerRef={innerRef}
+            />
+          )
+        }
         {errors.hasOwnProperty(name) && <FormFeedback>This field is required</FormFeedback>}
       </InputGroup>
     </FormGroup>

@@ -16,11 +16,11 @@ export interface IAuthor extends IModel {
   firstname:  string;
   is_master:  boolean;
   lastname:   string;
-  user_id:    bigint;
+  user_id:    bigint | null;
   image_urls: string[];
   pending_images: string[];
   display_name: string;
-  biography: IBiography;
+  biography: string;
   nationality_id: number;
   books: IBook[];
   secret_orders: ISecretOrder[];

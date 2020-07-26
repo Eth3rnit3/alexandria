@@ -15,7 +15,7 @@ export default function Router({}: Props): ReactElement {
         <Route exact path="/" component={Authors} />
         <Route exact path="/authors" component={Authors} />
         <Route exact path="/authors/new" component={AuthorForm} />
-        <Route exact path="/authors/:id" component={AuthorForm} />
+        <Route path="/authors/:id" component={AuthorForm} />
       </Switch>
     </div>
   )
