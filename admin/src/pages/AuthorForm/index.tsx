@@ -12,6 +12,7 @@ import { RouteChildrenProps } from 'react-router-dom';
 import { fetchAuthor } from '../../api/authors';
 import { ISecretOrder } from '../../interfaces/secretOrder';
 import { fetchSecretOrders } from '../../api/secret_orders';
+import RitchTextTrix from '../../components/RitchTextTrix';
 
 const defaultAuthor: IAuthor = {
   //@ts-ignore
@@ -155,6 +156,9 @@ export default function AuthorForm({ match }: Props): ReactElement {
               <Label>Maître de son art</Label>
               <CustomInput onChange={(e) => set_author({..._author, is_master: e.target.checked})} checked={_author.is_master} type="switch" id="is_master" innerRef={register} name="is_master" label="Activer si l'auteur a ateind la maîtrise de son art" />
             </FormGroup>
+          </Col>
+          <Col md="12">
+            <RitchTextTrix />
           </Col>
         </Row>
         <Row>
