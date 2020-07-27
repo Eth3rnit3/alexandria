@@ -22,26 +22,46 @@ const toolbarOptions = [
   ['clean']                                         // remove formatting button
 ];
 
-export default function RitchText() {
+export default function RitchText({
+  defaultValue,
+  name = 'richtext',
+  placeholder = "Ajouter du contenu sur l'auteur ...",
+  inputRef
+}) {
+  const [_inputValue, set_inputValue] = React.useState(defaultValue);
+  const [_editor, set_editor] = React.useState(null);
+
+  // componentDidMount
   React.useEffect(() => {
-    const editor = new Quill('#editor-container', {
+    const editor = new Quill('#quill-editor-container', {
       modules: {
         toolbar: toolbarOptions
       },
-      placeholder: "Ajouter du contenu sur l'auteur ...",
-      theme: 'snow'  // or 'bubble'
+      placeholder,
+      theme: 'snow'
     });
 
     let change = new Delta();
     editor.on('text-change', function(delta) {
       change = change.compose(delta);
-      console.log("Change", editor.root.innerHTML)
+      set_inputValue(editor.root.innerHTML)
     });
+    set_editor(editor);
   }, [])
+
+  // defaultValue listenner
+  React.useEffect(() => {
+    if((defaultValue && defaultValue.length >= 1) && _inputValue !== defaultValue && _editor){
+      _editor.root.innerHTML = defaultValue;
+      set_inputValue(defaultValue);
+    }
+  }, [defaultValue])
+
   return (
-    <div>
+    <>
+      <input type="hidden" value={_inputValue} name={name} ref={inputRef} />
       <link href="https://cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet"/>
-      <div style={{ height: '350px' }} id="editor-container" />
-    </div>
+      <div style={{ height: '350px' }} id="quill-editor-container" />
+    </>
   )
 }

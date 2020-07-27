@@ -12,7 +12,7 @@ import { RouteChildrenProps } from 'react-router-dom';
 import { fetchAuthor } from '../../api/authors';
 import { ISecretOrder } from '../../interfaces/secretOrder';
 import { fetchSecretOrders } from '../../api/secret_orders';
-import RitchTextTrix from '../../components/RitchTextTrix';
+import RitchText from '../../components/RitchText';
 
 const defaultAuthor: IAuthor = {
   //@ts-ignore
@@ -69,7 +69,7 @@ export default function AuthorForm({ match }: Props): ReactElement {
     refreshAuthor();
   }, [])
 
-  console.log({_author});
+  const formatedSecretOrders = _author.secret_orders.map(secret_order => ({ label: secret_order.name, value: secret_order.id }));
   return (
     <Container>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -138,11 +138,11 @@ export default function AuthorForm({ match }: Props): ReactElement {
           {
             isEditMode &&
             <Col md="6">
-              <input type="hidden" name="secret_order_ids" ref={register}/>
+              <input defaultValue={JSON.stringify(formatedSecretOrders.map(so => so.value))}  type="hidden" name="secret_order_ids" ref={register}/>
               <HasManyPicker
                 options={_secret_orders.map(secret_order => ({ label: secret_order.name, value: secret_order.id }))}
                 //@ts-ignore
-                defaultValue={_author.secret_orders.map(secret_order => ({ label: secret_order.name, value: secret_order.id }))}
+                defaultValue={formatedSecretOrders}
                 label="Sociétés secrètes"
                 name="secret_order_ids"
                 fromResource={_author}
@@ -158,7 +158,7 @@ export default function AuthorForm({ match }: Props): ReactElement {
             </FormGroup>
           </Col>
           <Col md="12">
-            <RitchTextTrix />
+            <RitchText inputRef={register} name="biography" defaultValue={_author.biography} />
           </Col>
         </Row>
         <Row>
